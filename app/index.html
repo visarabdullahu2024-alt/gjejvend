@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gjejvend | Prishtina Live Parking Simulator</title>
+    <meta
+      name="description"
+      content="Map-first parking simulator for Prishtina with live availability, map pins, and reservations."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=2" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <div class="container nav-row">
+          <a class="brand" href="#top">
+            <span class="brand-mark">P</span>
+            <span>
+              <strong>Gjejvend</strong>
+              <small data-i18n="brand_subtitle">Prishtina live parking simulator</small>
+            </span>
+          </a>
+
+          <nav class="nav-links">
+            <a href="#map" data-i18n="nav_map">Live Map</a>
+            <a href="#features" data-i18n="nav_features">Features</a>
+            <a href="#reservations" data-i18n="nav_reservations">Reservations</a>
+          </nav>
+
+          <div class="header-actions">
+            <div class="language-switch" role="group" aria-label="Language switcher">
+              <button class="lang-button is-active" type="button" data-lang="en">EN</button>
+              <button class="lang-button" type="button" data-lang="sq">SQ</button>
+            </div>
+            <a class="nav-cta" href="#map" data-i18n="open_map">Open map</a>
+          </div>
+        </div>
+      </header>
+
+      <main id="top">
+        <section class="hero">
+          <div class="container hero-grid">
+            <div class="hero-copy">
+              <p class="eyebrow" data-i18n="hero_eyebrow">Ride-hailing style experience for your university project</p>
+              <h1 data-i18n="hero_title">See free parking live on the Prishtina map and reserve it instantly.</h1>
+              <p class="hero-text" data-i18n="hero_text">
+                This version turns Gjejvend into a live city simulator for Prishtina. Drivers can watch parking
+                availability change in real time, tap map pins, compare prices, and reserve a spot before arriving.
+              </p>
+
+              <div class="hero-actions">
+                <a class="button button-primary" href="#map" data-i18n="hero_cta_primary">Try live map</a>
+                <a class="button button-secondary" href="#features" data-i18n="hero_cta_secondary">See simulator features</a>
+              </div>
+
+              <ul class="hero-points">
+                <li data-i18n="hero_point_1">Live map pins that update every few seconds</li>
+                <li data-i18n="hero_point_2">Direct reservation from map or side panel</li>
+                <li data-i18n="hero_point_3">Prishtina hotspots: center, stadium, bus station, Ulpiana, and Sunny Hill zones</li>
+              </ul>
+            </div>
+
+            <aside class="hero-panel">
+              <div class="hero-stat-card accent">
+                <span data-i18n="hero_live_now">Live now in simulator</span>
+                <strong id="heroOpenSpots">0 free spots</strong>
+                <p data-i18n="hero_live_text">Availability refreshes automatically to simulate drivers entering and leaving parking areas.</p>
+              </div>
+              <div class="hero-stat-card">
+                <span data-i18n="hero_best_label">Fastest option</span>
+                <strong id="heroBestPrice">EUR 0</strong>
+                <p data-i18n="hero_best_text">Best current prepaid rate in central Prishtina.</p>
+              </div>
+              <div class="hero-map-card metro">
+                <p class="mini-label" data-i18n="hero_coverage">Prishtina coverage</p>
+                <div class="mini-grid-road road-a"></div>
+                <div class="mini-grid-road road-b"></div>
+                <div class="mini-grid-road road-c"></div>
+                <div class="mini-point point-a" data-i18n="zone_center">Center</div>
+                <div class="mini-point point-b" data-i18n="zone_stadium">Stadium</div>
+                <div class="mini-point point-c">Ulpiana</div>
+                <div class="mini-point point-d" data-i18n="zone_bus_station">Bus Station</div>
+                <div class="mini-point point-e">Sunny Hill</div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="map-section" id="map">
+          <div class="container">
+            <div class="section-heading">
+              <p class="eyebrow" data-i18n="map_heading_eyebrow">Live Prishtina Map</p>
+              <h2 data-i18n="map_heading_title">Pick a zone, watch availability move, then reserve your parking.</h2>
+            </div>
+
+            <div class="map-layout">
+              <aside class="control-panel">
+                <form id="searchForm" class="search-form">
+                  <label>
+                    <span data-i18n="field_destination">Destination</span>
+                    <select name="destination" id="destination">
+                      <option value="Prishtine Center">Prishtine Center</option>
+                      <option value="Fadil Vokrri Stadium">Fadil Vokrri Stadium</option>
+                      <option value="Sunny Hill Event Zone">Sunny Hill Event Zone</option>
+                      <option value="Bus Station">Bus Station</option>
+                      <option value="Ulpiana District">Ulpiana District</option>
+                    </select>
+                  </label>
+
+                  <label>
+                    <span data-i18n="field_date">Date</span>
+                    <input type="date" name="date" id="dateInput" required />
+                  </label>
+
+                  <label>
+                    <span data-i18n="field_start_time">Start time</span>
+                    <input type="time" name="startTime" id="startTimeInput" value="09:00" required />
+                  </label>
+
+                  <label>
+                    <span data-i18n="field_duration">Duration</span>
+                    <select name="duration" id="duration">
+                      <option value="1">1 hour</option>
+                      <option value="2">2 hours</option>
+                      <option value="4" selected>4 hours</option>
+                      <option value="8">8 hours</option>
+                      <option value="12">12 hours</option>
+                      <option value="24">24 hours</option>
+                      <option value="720">Monthly</option>
+                    </select>
+                  </label>
+
+                  <label>
+                    <span data-i18n="field_parking_type">Parking type</span>
+                    <select name="parkingType" id="parkingType">
+                      <option value="all">All types</option>
+                      <option value="garage">Garage</option>
+                      <option value="lot">Lot</option>
+                      <option value="valet">Valet</option>
+                      <option value="event">Event</option>
+                      <option value="monthly">Monthly</option>
+                    </select>
+                  </label>
+
+                  <label class="toggle-row">
+                    <input type="checkbox" id="evOnly" />
+                    <span data-i18n="filter_ev_only">EV charging only</span>
+                  </label>
+
+                  <label class="toggle-row">
+                    <input type="checkbox" id="coveredOnly" />
+                    <span data-i18n="filter_covered_only">Covered parking only</span>
+                  </label>
+
+                  <button class="button button-primary wide" type="submit" data-i18n="update_live_map">Update live map</button>
+                </form>
+
+                <div class="live-strip">
+                  <div class="search-insight">
+                    <span data-i18n="live_refresh">Live refresh</span>
+                    <strong data-i18n="live_refresh_value">Every 4 seconds</strong>
+                    <p data-i18n="live_refresh_text">Simulator changes free spots to feel like a moving city.</p>
+                  </div>
+                  <div class="search-insight" id="searchInsights"></div>
+                </div>
+              </aside>
+
+              <section class="map-panel">
+                <div class="map-topbar">
+                  <div>
+                    <p class="mini-label" data-i18n="city_view">City View</p>
+                    <h3 id="resultsTitle">Live parking near your destination</h3>
+                  </div>
+                  <div class="map-summary">
+                    <span id="mapSummary">0 active locations</span>
+                    <label class="sort-control">
+                      <span data-i18n="sort_label">Sort</span>
+                      <select id="sortSelect">
+                        <option value="recommended">Recommended</option>
+                        <option value="price">Lowest price</option>
+                        <option value="distance">Closest</option>
+                        <option value="savings">Highest savings</option>
+                      </select>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="prishtina-map" id="prishtinaMap">
+                  <div class="map-watermark">PRISHTINA</div>
+                  <div class="map-road orbital"></div>
+                  <div class="map-road north-south"></div>
+                  <div class="map-road east-west"></div>
+                  <div class="map-road diagonal"></div>
+                  <div class="map-zone zone-center" data-i18n="zone_qendra">Qendra</div>
+                  <div class="map-zone zone-stadium" data-i18n="zone_stadium">Stadium</div>
+                  <div class="map-zone zone-ulpiana">Ulpiana</div>
+                  <div class="map-zone zone-bus" data-i18n="zone_bus_station">Bus Station</div>
+                  <div class="map-zone zone-sunny">Sunny Hill</div>
+                  <div id="mapPins"></div>
+                </div>
+
+                <div class="legend-row">
+                  <span class="legend-item"><i class="legend-dot green"></i><span data-i18n="legend_many">Many free spots</span></span>
+                  <span class="legend-item"><i class="legend-dot amber"></i><span data-i18n="legend_limited">Limited spots</span></span>
+                  <span class="legend-item"><i class="legend-dot red"></i><span data-i18n="legend_full">Almost full</span></span>
+                </div>
+              </section>
+
+              <aside class="detail-panel">
+                <div class="selected-card" id="selectedSpotCard"></div>
+                <div class="results-grid compact" id="resultsGrid"></div>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        <section class="feature-section" id="features">
+          <div class="container">
+            <div class="section-heading">
+              <p class="eyebrow" data-i18n="features_eyebrow">Simulator Features</p>
+              <h2 data-i18n="features_title">What this map-based version demonstrates.</h2>
+            </div>
+
+            <div class="feature-grid">
+              <article class="feature-card">
+                <h3 data-i18n="feature_1_title">Live parking map</h3>
+                <p data-i18n="feature_1_text">Users view available parking as moving pins on a city map instead of only browsing a list.</p>
+              </article>
+              <article class="feature-card">
+                <h3 data-i18n="feature_2_title">Dynamic availability</h3>
+                <p data-i18n="feature_2_text">Spot counts update automatically, creating the feeling of a live transport-style marketplace.</p>
+              </article>
+              <article class="feature-card">
+                <h3 data-i18n="feature_3_title">Map-first reservations</h3>
+                <p data-i18n="feature_3_text">Every pin opens detailed pricing, walking distance, entry instructions, and one-tap reservation.</p>
+              </article>
+              <article class="feature-card">
+                <h3 data-i18n="feature_4_title">Presentation-ready demo</h3>
+                <p data-i18n="feature_4_text">Everything works locally in the browser, so you can present a realistic prototype without a complex backend.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="strategy-section" id="strategy">
+          <div class="container">
+            <div class="section-heading">
+              <p class="eyebrow" data-i18n="strategy_eyebrow">Startup Strategy</p>
+              <h2 data-i18n="strategy_title">Executive summary, roadmap, and Kosovo localization.</h2>
+            </div>
+
+            <div class="summary-card">
+              <p class="mini-label" data-i18n="executive_summary">Executive Summary</p>
+              <h3 data-i18n="summary_title">GjejVend is a map-first parking reservation platform for Prishtina.</h3>
+              <p data-i18n="summary_text">
+                GjejVend connects drivers looking for parking with private individuals or businesses that have available spots.
+                As the platform scales, it can integrate sensors and cameras to digitize, optimize, and monetize public parking spaces.
+              </p>
+            </div>
+
+            <div class="value-grid">
+              <article class="feature-card">
+                <h3 data-i18n="value_drivers_title">For Drivers</h3>
+                <p data-i18n="value_drivers_text">Guaranteed parking exactly when and where needed, removing the stress and traffic caused by circling for a spot.</p>
+              </article>
+              <article class="feature-card">
+                <h3 data-i18n="value_owners_title">For Spot Owners</h3>
+                <p data-i18n="value_owners_text">Monetize unused driveways, private lots, and office parking spaces after working hours.</p>
+              </article>
+              <article class="feature-card">
+                <h3 data-i18n="value_city_title">For the City</h3>
+                <p data-i18n="value_city_text">Reduce congestion, lower emissions, and improve public space usage through real-time parking analytics.</p>
+              </article>
+            </div>
+
+            <div class="roadmap-grid">
+              <article class="roadmap-card">
+                <p class="mini-label" data-i18n="phase_1_label">Phase 1</p>
+                <h3 data-i18n="phase_1_title">MVP: Private Parking Network</h3>
+                <ul class="roadmap-list">
+                  <li data-i18n="phase_1_point_1">Search and filter by location, date, time, vehicle size, and price.</li>
+                  <li data-i18n="phase_1_point_2">Booking requests or instant booking based on manager preference.</li>
+                  <li data-i18n="phase_1_point_3">Navigation, geofencing, automated check-in/check-out, and digital payments.</li>
+                  <li data-i18n="phase_1_point_4">Spot manager portal with listing photos, schedules, pricing, requests, and revenue metrics.</li>
+                </ul>
+              </article>
+              <article class="roadmap-card">
+                <p class="mini-label" data-i18n="phase_2_label">Phase 2</p>
+                <h3 data-i18n="phase_2_title">Scaling: Smart Public Parking</h3>
+                <ul class="roadmap-list">
+                  <li data-i18n="phase_2_point_1">IoT parking sensors detect whether public spots are occupied in real time.</li>
+                  <li data-i18n="phase_2_point_2">ANPR cameras track vehicle entry and exit using number plate recognition.</li>
+                  <li data-i18n="phase_2_point_3">Drive-through billing charges users automatically for the exact minutes used.</li>
+                </ul>
+              </article>
+            </div>
+
+            <div class="recommendation-grid">
+              <article class="recommendation-card">
+                <h3 data-i18n="rec_1_title">Inventory Management Algorithm</h3>
+                <p data-i18n="rec_1_text">Prevent overlap automatically with 15-minute buffers before and after each booking instead of relying on managers to edit requests manually.</p>
+              </article>
+              <article class="recommendation-card">
+                <h3 data-i18n="rec_2_title">Geofencing for privacy</h3>
+                <p data-i18n="rec_2_text">Use low-power location logic that becomes active only near the parking spot, then combine it with a manual arrival confirmation if GPS accuracy drops.</p>
+              </article>
+              <article class="recommendation-card">
+                <h3 data-i18n="rec_3_title">Grace periods and overstay rules</h3>
+                <p data-i18n="rec_3_text">Add clear buffer zones and premium overstay penalties to protect drivers, owners, and booking reliability.</p>
+              </article>
+              <article class="recommendation-card">
+                <h3 data-i18n="rec_4_title">Localization for Kosovo</h3>
+                <p data-i18n="rec_4_text">Support local bank APIs, precise pin-drop driveway mapping, and Prishtina-specific navigation accuracy for narrow streets and alleys.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="reservation-section" id="reservations">
+          <div class="container reservation-layout">
+            <div>
+              <div class="section-heading">
+                <p class="eyebrow" data-i18n="saved_bookings">Saved Bookings</p>
+                <h2 data-i18n="reservations_title">Your simulated reservations.</h2>
+              </div>
+              <p class="section-copy" data-i18n="reservations_text">
+                Reservations are saved in your browser so you can present booking history, digital access, and navigation
+                to the selected parking spot.
+              </p>
+            </div>
+            <div class="reservation-list" id="reservationList"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <dialog class="booking-modal" id="bookingModal">
+      <form class="modal-card" id="bookingForm" method="dialog">
+        <div class="modal-top">
+          <div>
+            <p class="mini-label" data-i18n="complete_reservation">Complete reservation</p>
+            <h3 id="modalTitle">Parking checkout</h3>
+          </div>
+          <button class="icon-button" type="button" id="closeModal" aria-label="Close">&times;</button>
+        </div>
+
+        <div class="modal-grid">
+          <div class="booking-summary" id="bookingSummary"></div>
+
+          <div class="booking-fields">
+            <label>
+              <span data-i18n="driver_name">Driver name</span>
+              <input type="text" id="driverName" data-i18n-placeholder="driver_name_placeholder" placeholder="Your full name" required />
+            </label>
+            <label>
+              <span>Email</span>
+              <input type="email" id="driverEmail" placeholder="you@example.com" required />
+            </label>
+            <label>
+              <span data-i18n="vehicle_plate">Vehicle plate</span>
+              <input type="text" id="vehiclePlate" placeholder="01-123-AB" required />
+            </label>
+            <label>
+              <span data-i18n="payment_method">Payment method</span>
+              <select id="paymentMethod">
+                <option value="Google Pay">Google Pay</option>
+                <option value="Credit Card">Credit Card</option>
+                <option value="Apple Pay">Apple Pay</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="button button-secondary" type="button" id="cancelBooking" data-i18n="cancel">Cancel</button>
+          <button class="button button-primary" type="submit" data-i18n="confirm_reservation">Confirm reservation</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="./app.js?v=2"></script>
+  </body>
+</html>

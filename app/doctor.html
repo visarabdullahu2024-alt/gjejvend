@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gjejvend | Reservation Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=1" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <div class="container nav-row">
+          <a class="brand" href="./index.html">
+            <span class="brand-mark">P</span>
+            <span>
+              <strong>Gjejvend</strong>
+              <small>Reservation dashboard</small>
+            </span>
+          </a>
+          <a class="nav-cta" href="./index.html">Back to simulator</a>
+        </div>
+      </header>
+
+      <main class="reservation-section">
+        <div class="container reservation-layout">
+          <div>
+            <div class="section-heading">
+              <p class="eyebrow">Operator View</p>
+              <h2>Saved demo reservations.</h2>
+            </div>
+            <p class="section-copy">
+              This page reads the same browser-stored reservation data so you can show a second “operator” screen in your university presentation.
+            </p>
+          </div>
+          <div class="reservation-list" id="reservationList"></div>
+        </div>
+      </main>
+    </div>
+
+    <script src="./app.js?v=1"></script>
+  </body>
+</html>
