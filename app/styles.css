@@ -581,7 +581,7 @@ select {
 
 .prishtina-map {
   position: relative;
-  min-height: clamp(340px, 40vw, 430px);
+  min-height: clamp(380px, 42vw, 470px);
   overflow: hidden;
   border-radius: 28px;
   background:
@@ -657,6 +657,43 @@ select {
 #mapPins {
   position: absolute;
   inset: 0;
+}
+
+.map-dock {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+  display: grid;
+  grid-template-columns: 160px 160px minmax(0, 1fr);
+  gap: 10px;
+  z-index: 4;
+}
+
+.map-dock-card {
+  padding: 14px 14px 12px;
+  border-radius: 20px;
+  background: rgba(12, 18, 27, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.22);
+}
+
+.map-dock-card strong {
+  display: block;
+  margin: 4px 0;
+  font-family: "Fraunces", serif;
+  font-size: 1.1rem;
+  line-height: 1.15;
+}
+
+.map-dock-card span {
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.4;
+}
+
+.map-dock-card.wide strong {
+  font-size: 1rem;
 }
 
 .map-pin {
@@ -1005,6 +1042,10 @@ select {
 
   .prishtina-map {
     min-height: 320px;
+  }
+
+  .map-dock {
+    grid-template-columns: 1fr;
   }
 
   .map-watermark {

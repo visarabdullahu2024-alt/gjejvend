@@ -223,6 +223,7 @@ const elements = {
   mapSummary: document.querySelector("#mapSummary"),
   heroOpenSpots: document.querySelector("#heroOpenSpots"),
   heroBestPrice: document.querySelector("#heroBestPrice"),
+  dockLiveCount: document.querySelector("#dockLiveCount"),
   languageButtons: Array.from(document.querySelectorAll("[data-lang]")),
 };
 
@@ -265,6 +266,14 @@ const translations = {
     live_refresh_value: "Every 4 seconds",
     live_refresh_text: "Simulator changes free spots to feel like a moving city.",
     city_view: "City View",
+    dock_live_title: "Live city pulse",
+    dock_live_text: "spots updating now",
+    dock_zone_title: "Premium zone",
+    dock_zone_value: "1.5x",
+    dock_zone_text: "center demand multiplier",
+    dock_policy_title: "Quick policy",
+    dock_policy_value: "10 min grace + $0.05 app fee",
+    dock_policy_text: "15-minute save-spot option and $2 no-show fee included in simulator rules",
     sort_label: "Sort",
     legend_many: "Many free spots",
     legend_limited: "Limited spots",
@@ -465,6 +474,14 @@ const translations = {
     live_refresh_value: "Çdo 4 sekonda",
     live_refresh_text: "Simulatori ndryshon vendet e lira për ta bërë qytetin më realist.",
     city_view: "Pamja e qytetit",
+    dock_live_title: "Pulsi live i qytetit",
+    dock_live_text: "vende po përditësohen tani",
+    dock_zone_title: "Zona premium",
+    dock_zone_value: "1.5x",
+    dock_zone_text: "shumëzues i kërkesës në qendër",
+    dock_policy_title: "Politika e shpejtë",
+    dock_policy_value: "10 min tolerancë + $0.05 tarifë app",
+    dock_policy_text: "Opsion 15-minutësh për ruajtje vendi dhe tarifë $2 për mosparaqitje në rregullat e simulatorit",
     sort_label: "Rendit",
     legend_many: "Shumë vende të lira",
     legend_limited: "Pak vende të lira",
@@ -955,6 +972,9 @@ function updateHeroStats() {
   );
   elements.heroOpenSpots.textContent = `${totalSpots} ${t("free_spots")}`;
   elements.heroBestPrice.textContent = formatCurrency(calculatePrice(cheapest, 2));
+  if (elements.dockLiveCount) {
+    elements.dockLiveCount.textContent = totalSpots;
+  }
 }
 
 function renderAll() {
