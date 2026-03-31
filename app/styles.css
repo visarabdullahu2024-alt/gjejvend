@@ -233,6 +233,19 @@ h4 {
   padding: 28px 0 52px;
 }
 
+.map-section {
+  padding-bottom: 18px;
+}
+
+.pricing-section {
+  padding-top: 10px;
+}
+
+.strategy-section,
+.reservation-section {
+  padding-top: 16px;
+}
+
 .hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) 390px;
@@ -263,11 +276,46 @@ h4 {
   border-radius: var(--radius-xl);
 }
 
+.control-panel,
+.map-panel,
+.detail-panel {
+  align-self: start;
+}
+
 .hero-copy,
 .control-panel,
 .map-panel,
 .detail-panel {
   padding: 22px;
+}
+
+.detail-panel {
+  display: grid;
+  gap: 12px;
+}
+
+.detail-panel .results-grid.compact {
+  gap: 12px;
+}
+
+.detail-panel .result-card {
+  padding: 16px;
+}
+
+.detail-panel .result-card h4 {
+  font-size: 1.08rem;
+}
+
+.detail-panel .price-block strong {
+  font-size: 1.35rem;
+}
+
+.detail-panel .result-meta {
+  gap: 8px;
+}
+
+.detail-panel .result-meta span {
+  font-size: 0.88rem;
 }
 
 .hero-panel {
@@ -522,7 +570,7 @@ select {
   justify-content: space-between;
   gap: 16px;
   align-items: end;
-  margin-bottom: 18px;
+  margin-bottom: 14px;
 }
 
 .map-summary {
@@ -533,7 +581,7 @@ select {
 
 .prishtina-map {
   position: relative;
-  min-height: 520px;
+  min-height: clamp(340px, 40vw, 430px);
   overflow: hidden;
   border-radius: 28px;
   background:
@@ -665,7 +713,7 @@ select {
 }
 
 .legend-row {
-  margin-top: 16px;
+  margin-top: 10px;
 }
 
 .legend-item {
@@ -775,7 +823,7 @@ select {
 }
 
 .summary-card {
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 }
 
 .summary-card h3,
@@ -787,14 +835,14 @@ select {
 
 .value-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 }
 
 .pricing-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) 360px;
   gap: 18px;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 }
 
 .pricing-side {
@@ -827,7 +875,7 @@ select {
 
 .roadmap-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 }
 
 .recommendation-grid {
@@ -956,7 +1004,7 @@ select {
   }
 
   .prishtina-map {
-    min-height: 400px;
+    min-height: 320px;
   }
 
   .map-watermark {
