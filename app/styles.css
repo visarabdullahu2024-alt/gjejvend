@@ -179,6 +179,7 @@ h4 {
 .hero,
 .map-section,
 .feature-section,
+.pricing-section,
 .strategy-section,
 .reservation-section {
   padding: 40px 0 64px;
@@ -650,7 +651,8 @@ select {
 
 .summary-card,
 .roadmap-card,
-.recommendation-card {
+.recommendation-card,
+.pricing-table-card {
   padding: 24px;
   border-radius: var(--radius-xl);
   background: rgba(255, 250, 244, 0.94);
@@ -672,6 +674,41 @@ select {
 .value-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-bottom: 18px;
+}
+
+.pricing-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) 360px;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.pricing-side {
+  display: grid;
+  gap: 16px;
+}
+
+.pricing-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.pricing-table th,
+.pricing-table td {
+  padding: 18px 16px;
+  border-bottom: 1px solid rgba(19, 34, 56, 0.08);
+  text-align: left;
+}
+
+.pricing-table th {
+  font-family: "Fraunces", serif;
+  font-size: 1.2rem;
+}
+
+.policy-inline {
+  margin-top: 14px;
+  color: var(--muted);
+  line-height: 1.7;
 }
 
 .roadmap-grid {
@@ -776,6 +813,7 @@ select {
   .hero-grid,
   .reservation-layout,
   .feature-grid,
+  .pricing-layout,
   .value-grid,
   .roadmap-grid,
   .recommendation-grid {

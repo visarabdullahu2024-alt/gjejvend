@@ -17,6 +17,7 @@ const parkingInventory = [
     address: "Garibaldi Street, Prishtine",
     access: "Scan QR at the gate. Level B2 reserved lane.",
     tags: ["Covered", "EV charging", "Mobile pass"],
+    zone: "premium",
     x: 45,
     y: 42,
   },
@@ -38,6 +39,7 @@ const parkingInventory = [
     address: "Mother Teresa Boulevard, Prishtine",
     access: "Show reservation to valet attendant at Hotel Sirius corner.",
     tags: ["Valet", "Fast entry", "Premium"],
+    zone: "premium",
     x: 49,
     y: 36,
   },
@@ -59,6 +61,7 @@ const parkingInventory = [
     address: "Luan Haradinaj Street, Prishtine",
     access: "Event lane opens 90 minutes before kickoff.",
     tags: ["Event parking", "Large capacity"],
+    zone: "premium",
     x: 58,
     y: 31,
   },
@@ -80,6 +83,7 @@ const parkingInventory = [
     address: "Ulpiana, Prishtine",
     access: "License plate entry with attendant support.",
     tags: ["Budget pick", "EV charging"],
+    zone: "standard",
     x: 60,
     y: 58,
   },
@@ -101,6 +105,7 @@ const parkingInventory = [
     address: "Dardania Block, Prishtine",
     access: "Monthly pass lane opens with plate recognition.",
     tags: ["Monthly", "Covered", "Commuter"],
+    zone: "standard",
     x: 31,
     y: 56,
   },
@@ -122,6 +127,7 @@ const parkingInventory = [
     address: "Bus Station Ring, Prishtine",
     access: "Budget outdoor lot with staffed entrance.",
     tags: ["Budget pick", "Transit access"],
+    zone: "standard",
     x: 24,
     y: 61,
   },
@@ -143,6 +149,7 @@ const parkingInventory = [
     address: "Germia Approach Road, Prishtine",
     access: "Festival access lane and digital event pass.",
     tags: ["Event", "Large capacity"],
+    zone: "standard",
     x: 77,
     y: 27,
   },
@@ -164,10 +171,25 @@ const parkingInventory = [
     address: "Agim Ramadani Street, Prishtine",
     access: "Fast access beside municipal offices.",
     tags: ["Covered", "Premium", "Fast access"],
+    zone: "premium",
     x: 42,
     y: 34,
   },
 ];
+
+const STANDARD_PRICING = [
+  { upToHours: 0.5, price: 0.5 },
+  { upToHours: 1, price: 1 },
+  { upToHours: 2, price: 2 },
+  { upToHours: 4, price: 5 },
+  { upToHours: 6, price: 7 },
+  { upToHours: 8, price: 10 },
+  { upToHours: 24, price: 15 },
+];
+
+const PREMIUM_MULTIPLIER = 1.5;
+const APP_SERVICE_FEE = 0.05;
+const COMMUTER_PLAN_PRICE = 80;
 
 const state = {
   selectedSpot: null,
@@ -257,6 +279,34 @@ const translations = {
     feature_3_text: "Every pin opens detailed pricing, walking distance, entry instructions, and one-tap reservation.",
     feature_4_title: "Presentation-ready demo",
     feature_4_text: "Everything works locally in the browser, so you can present a realistic prototype without a complex backend.",
+    pricing_eyebrow: "Pricing & Policies",
+    pricing_title: "Default pricing, memberships, and reservation rules.",
+    standard_pricing: "Standard Pricing Table",
+    table_duration: "Duration",
+    table_cost: "Cost",
+    price_row_1_time: "0 - 30 Minutes",
+    price_row_2_time: "30 Minutes - 1 Hour",
+    price_row_3_time: "1 - 2 Hours",
+    price_row_4_time: "2 - 4 Hours",
+    price_row_5_time: "4 - 6 Hours",
+    price_row_6_time: "6 - 8 Hours",
+    price_row_7_time: "8 - 24 Hours",
+    grace_period_text: "10-minute grace period before jumping to the next pricing tier.",
+    service_fee_text: "App service fee: $0.05 added on arrival for standard bookings paid with the app.",
+    dynamic_pricing: "Dynamic Pricing Zones",
+    dynamic_pricing_title: "Standard and Premium zone multipliers",
+    dynamic_pricing_text: "Standard zones use the base table. Premium city-center zones apply an automatic 1.5x multiplier.",
+    memberships: "Memberships",
+    membership_title: "Working Hours Commuter Plan",
+    membership_text: "Price: $80.00. Covers up to 8 hours per day, Monday to Friday, starting exactly at arrival time.",
+    policy_early_title: "Early Departure & Spot Saving",
+    policy_early_text: "If a driver leaves early, they get 15 minutes to choose “I’m Finished” for time-used billing or “Save My Spot” for a 10% flexibility fee while keeping the space reserved.",
+    policy_hold_title: "Pre-Authorization Hold",
+    policy_hold_text: "When a booking is made, the app places a hold for the booked total and captures only the final amount based on usage and policy.",
+    policy_cancel_title: "Cancellation & No-Show",
+    policy_cancel_text: "Drivers can cancel for free within 5 minutes. After that, or for a no-show, a flat $2.00 fee is charged to protect the spot owner.",
+    policy_zone_title: "Zone Assignment",
+    policy_zone_text: "Managers and the platform can mark spaces as Standard or Premium based on real demand and location intensity.",
     strategy_eyebrow: "Startup Strategy",
     strategy_title: "Executive summary, roadmap, and Kosovo localization.",
     executive_summary: "Executive Summary",
@@ -328,6 +378,9 @@ const translations = {
     monthly_plan: "Monthly plan",
     hours: "hours",
     prepaid_online: "prepaid online",
+    base_fee_line: "Base {base} + fee {fee} • {zone}",
+    zone_premium: "Premium 1.5x zone",
+    zone_standard: "Standard zone",
     free_spots_live_now: "free spots live right now",
     entry_instructions: "Entry instructions",
     no_reservations_yet: "No reservations yet.",
@@ -426,6 +479,34 @@ const translations = {
     feature_3_text: "Çdo pin hap çmimin, distancën në këmbë, udhëzimet e hyrjes dhe rezervimin me një klik.",
     feature_4_title: "Demo gati për prezantim",
     feature_4_text: "Gjithçka funksionon lokalisht në shfletues, kështu që mund të prezantosh një prototip realist pa backend kompleks.",
+    pricing_eyebrow: "Çmimet dhe Politikat",
+    pricing_title: "Çmimi bazë, membership-et dhe rregullat e rezervimit.",
+    standard_pricing: "Tabela Standarde e Çmimeve",
+    table_duration: "Kohëzgjatja",
+    table_cost: "Kosto",
+    price_row_1_time: "0 - 30 Minuta",
+    price_row_2_time: "30 Minuta - 1 Orë",
+    price_row_3_time: "1 - 2 Orë",
+    price_row_4_time: "2 - 4 Orë",
+    price_row_5_time: "4 - 6 Orë",
+    price_row_6_time: "6 - 8 Orë",
+    price_row_7_time: "8 - 24 Orë",
+    grace_period_text: "Periudhë tolerance prej 10 minutash para kalimit në tier-in tjetër të çmimit.",
+    service_fee_text: "Tarifa e aplikacionit: $0.05 shtohet në mbërritje për rezervimet standarde të paguara në aplikacion.",
+    dynamic_pricing: "Zonat e Çmimeve Dinamike",
+    dynamic_pricing_title: "Shumëzues standard dhe premium sipas zonës",
+    dynamic_pricing_text: "Zonat standarde përdorin tabelën bazë. Zonat premium në qendër aplikojnë automatikisht shumëzuesin 1.5x.",
+    memberships: "Membership-e",
+    membership_title: "Plani Komuter i Orarit të Punës",
+    membership_text: "Çmimi: $80.00. Mbulohet deri në 8 orë në ditë, nga e hëna në të premte, duke filluar saktësisht në momentin e mbërritjes.",
+    policy_early_title: "Dalja e Hershme dhe Ruajtja e Vendit",
+    policy_early_text: "Nëse shoferi largohet më herët, ai ka 15 minuta për të zgjedhur “Kam përfunduar” për pagesë sipas kohës së përdorur ose “Ruaje vendin tim” me tarifë fleksibiliteti 10%.",
+    policy_hold_title: "Mbajtja me Paraautorizim",
+    policy_hold_text: "Kur bëhet rezervimi, aplikacioni vendos një hold për totalin e rezervuar dhe kap vetëm shumën finale sipas përdorimit dhe politikës.",
+    policy_cancel_title: "Anulimi dhe Mosparaqitja",
+    policy_cancel_text: "Shoferët mund të anulojnë falas brenda 5 minutash. Pas kësaj, ose në rast mosparaqitjeje, ngarkohet tarifë fikse $2.00 për të mbrojtur pronarin e vendit.",
+    policy_zone_title: "Caktimi i Zonës",
+    policy_zone_text: "Menaxherët dhe platforma mund të shënojnë vendet si Standard ose Premium sipas kërkesës reale dhe intensitetit të lokacionit.",
     strategy_eyebrow: "Strategjia e startup-it",
     strategy_title: "Përmbledhja ekzekutive, roadmap-i dhe lokalizimi për Kosovë.",
     executive_summary: "Përmbledhje Ekzekutive",
@@ -497,6 +578,9 @@ const translations = {
     monthly_plan: "Plan mujor",
     hours: "orë",
     prepaid_online: "me parapagim online",
+    base_fee_line: "Bazë {base} + tarifë {fee} • {zone}",
+    zone_premium: "Zonë premium 1.5x",
+    zone_standard: "Zonë standarde",
     free_spots_live_now: "vende të lira tani live",
     entry_instructions: "Udhëzimet e hyrjes",
     no_reservations_yet: "Ende nuk ka rezervime.",
@@ -547,6 +631,10 @@ const translations = {
 
 function t(key) {
   return translations[state.language]?.[key] || translations.en[key] || key;
+}
+
+function interpolate(key, values) {
+  return Object.entries(values).reduce((text, [name, value]) => text.replace(`{${name}}`, value), t(key));
 }
 
 function formatTagKey(tag) {
@@ -632,7 +720,7 @@ function saveReservations() {
 function formatCurrency(value) {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
-    currency: "EUR",
+    currency: "USD",
     maximumFractionDigits: value >= 50 ? 0 : 2,
   }).format(value);
 }
@@ -653,10 +741,11 @@ function createDefaultDate() {
 
 function calculatePrice(spot, duration) {
   if (spot.type === "monthly" || duration >= 720) {
-    return Math.round(spot.basePrice);
+    return COMMUTER_PLAN_PRICE;
   }
-  const raw = spot.basePrice * duration * spot.hourlyMultiplier;
-  return Math.max(2, Math.round(raw * 100) / 100);
+  const tier = STANDARD_PRICING.find((item) => duration <= item.upToHours) || STANDARD_PRICING[STANDARD_PRICING.length - 1];
+  const multiplier = spot.zone === "premium" ? PREMIUM_MULTIPLIER : 1;
+  return Math.round(tier.price * multiplier * 100) / 100;
 }
 
 function getAvailabilityTone(spot) {
@@ -673,6 +762,8 @@ function getAvailabilityTone(spot) {
 function buildResult(spot, query) {
   const duration = Number(query.duration);
   const price = calculatePrice(spot, duration);
+  const serviceFee = spot.type === "monthly" || duration >= 720 ? 0 : APP_SERVICE_FEE;
+  const totalPrice = Math.round((price + serviceFee) * 100) / 100;
   const savings = Math.max(0, Math.round(((spot.driveUpPrice - price) / spot.driveUpPrice) * 100));
   const tone = getAvailabilityTone(spot);
   const availabilityLabel = tone === "high" ? t("many_spots_free") : tone === "medium" ? t("limited_spots") : t("almost_full");
@@ -684,7 +775,7 @@ function buildResult(spot, query) {
     (spot.distanceKm * 10) +
     (spot.availableSpots / 2);
 
-  return { ...spot, duration, price, savings, tone, availabilityLabel, recommendedScore };
+  return { ...spot, duration, price, serviceFee, totalPrice, savings, tone, availabilityLabel, recommendedScore };
 }
 
 function currentSearchFormValues() {
@@ -711,7 +802,7 @@ function getFilteredResults(query) {
 function sortResults(results, sortBy) {
   const sorted = [...results];
   if (sortBy === "price") {
-    sorted.sort((a, b) => a.price - b.price);
+    sorted.sort((a, b) => a.totalPrice - b.totalPrice);
   } else if (sortBy === "distance") {
     sorted.sort((a, b) => a.distanceKm - b.distanceKm);
   } else if (sortBy === "savings") {
@@ -735,13 +826,13 @@ function renderInsights(results, query) {
     return;
   }
 
-  const cheapest = results.reduce((best, current) => (current.price < best.price ? current : best), results[0]);
+  const cheapest = results.reduce((best, current) => (current.totalPrice < best.totalPrice ? current : best), results[0]);
   const fastest = results.reduce((best, current) => (current.walkMinutes < best.walkMinutes ? current : best), results[0]);
 
   elements.searchInsights.innerHTML = `
     <span>${t("best_live_match")}</span>
     <strong>${cheapest.name}</strong>
-    <p>${formatDate(query.date)} • ${query.startTime} • ${formatCurrency(cheapest.price)} • ${fastest.walkMinutes} ${t("min_closest_option")}</p>
+    <p>${formatDate(query.date)} • ${query.startTime} • ${formatCurrency(cheapest.totalPrice)} • ${fastest.walkMinutes} ${t("min_closest_option")}</p>
   `;
 }
 
@@ -800,7 +891,12 @@ function renderSelectedSpotCard(results) {
       <span>${selected.walkMinutes} ${t("min_walk")}</span>
       <span>${selected.availabilityLabel}</span>
     </div>
-    <div class="selected-price">${formatCurrency(selected.price)}</div>
+    <div class="selected-price">${formatCurrency(selected.totalPrice)}</div>
+    <p>${interpolate("base_fee_line", {
+      base: formatCurrency(selected.price),
+      fee: formatCurrency(selected.serviceFee),
+      zone: t(selected.zone === "premium" ? "zone_premium" : "zone_standard"),
+    })}</p>
     <p>${selected.access}</p>
     <div class="result-actions">
       <button class="button button-primary reserve-button" data-id="${selected.id}" type="button">${t("reserve_this_spot")}</button>
@@ -834,7 +930,7 @@ function renderResultsList(results) {
               <h4>${spot.name}</h4>
             </div>
             <div class="price-block">
-              <strong>${formatCurrency(spot.price)}</strong>
+              <strong>${formatCurrency(spot.totalPrice)}</strong>
               <span>${spot.availableSpots} ${t("free_spots")}</span>
             </div>
           </div>
@@ -891,7 +987,12 @@ function openBookingModal(spotId) {
     <p>${localizeDestination(state.search.destination)}</p>
     <p>${formatDate(state.search.date)} • ${state.search.startTime}</p>
     <p>${spot.duration >= 720 ? t("monthly_plan") : `${spot.duration} ${t("hours")}`} • ${spot.walkMinutes} ${t("min_walk")}</p>
-    <p><strong>${formatCurrency(spot.price)}</strong> ${t("prepaid_online")}</p>
+    <p><strong>${formatCurrency(spot.totalPrice)}</strong> ${t("prepaid_online")}</p>
+    <p>${interpolate("base_fee_line", {
+      base: formatCurrency(spot.price),
+      fee: formatCurrency(spot.serviceFee),
+      zone: t(spot.zone === "premium" ? "zone_premium" : "zone_standard"),
+    })}</p>
     <p>${spot.availableSpots} ${t("free_spots_live_now")}</p>
     <p>${t("entry_instructions")}: ${spot.access}</p>
   `;
@@ -978,7 +1079,7 @@ function handleBookingSubmit(event) {
     date: state.search.date,
     startTime: state.search.startTime,
     duration: state.selectedSpot.duration,
-    price: state.selectedSpot.price,
+    price: state.selectedSpot.totalPrice,
     access: state.selectedSpot.access,
     mapLink: getMapLink(state.selectedSpot),
     paymentMethod: elements.paymentMethod.value,
