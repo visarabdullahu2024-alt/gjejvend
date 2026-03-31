@@ -51,7 +51,7 @@ body::before {
     radial-gradient(circle at 30% 35%, rgba(255, 255, 255, 0.03), transparent 22%),
     radial-gradient(circle at 70% 28%, rgba(182, 242, 21, 0.04), transparent 18%);
   mix-blend-mode: screen;
-  opacity: 0.85;
+  opacity: 0.45;
 }
 
 .page-shell {
@@ -63,23 +63,23 @@ body::before {
 .page-shell::after {
   content: "";
   position: absolute;
-  border: 1px solid rgba(182, 242, 21, 0.22);
+  border: 1px solid rgba(182, 242, 21, 0.12);
   pointer-events: none;
 }
 
 .page-shell::before {
-  width: 300px;
-  height: 220px;
+  width: 200px;
+  height: 140px;
   right: 6%;
-  top: 92px;
+  top: 104px;
 }
 
 .page-shell::after {
-  width: 220px;
-  height: 180px;
+  width: 150px;
+  height: 120px;
   left: 18%;
-  top: 180px;
-  transform: rotate(-8deg);
+  top: 190px;
+  transform: rotate(-5deg);
 }
 
 a {
@@ -230,13 +230,13 @@ h4 {
 .pricing-section,
 .strategy-section,
 .reservation-section {
-  padding: 40px 0 64px;
+  padding: 28px 0 52px;
 }
 
 .hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) 390px;
-  gap: 36px;
+  gap: 20px;
   align-items: stretch;
   position: relative;
 }
@@ -267,15 +267,37 @@ h4 {
 .control-panel,
 .map-panel,
 .detail-panel {
-  padding: 28px;
+  padding: 22px;
 }
 
 .hero-panel {
-  padding: 22px;
+  padding: 18px;
   display: grid;
-  gap: 16px;
+  gap: 14px;
   position: relative;
-  transform: translateY(38px);
+  transform: none;
+}
+
+.parking-sign {
+  display: flex;
+  justify-content: center;
+  margin: 2px 0 4px;
+}
+
+.parking-sign-box {
+  width: 78px;
+  height: 78px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 22px;
+  background: linear-gradient(180deg, #2e7dff, #1f57c7);
+  color: #ffffff;
+  font-family: "Fraunces", serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  box-shadow: 0 18px 34px rgba(12, 22, 46, 0.32);
+  border: 4px solid rgba(255, 255, 255, 0.92);
 }
 
 .eyebrow,
@@ -285,11 +307,11 @@ h4 {
 }
 
 h1 {
-  margin: 8px 0 18px;
-  font-size: clamp(2.9rem, 6vw, 5.3rem);
-  line-height: 0.94;
-  max-width: 11ch;
-  letter-spacing: -0.03em;
+  margin: 6px 0 14px;
+  font-size: clamp(2.5rem, 4.8vw, 4.3rem);
+  line-height: 1.02;
+  max-width: 9ch;
+  letter-spacing: -0.02em;
 }
 
 .hero-text,
@@ -305,41 +327,35 @@ h1 {
 
 .hero-copy {
   position: relative;
-  min-height: 540px;
+  min-height: 420px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   overflow: hidden;
   background:
-    linear-gradient(90deg, rgba(23, 31, 45, 0.94) 0%, rgba(23, 31, 45, 0.9) 48%, rgba(255, 255, 255, 0) 49%),
+    linear-gradient(90deg, rgba(23, 31, 45, 0.96) 0%, rgba(23, 31, 45, 0.94) 62%, rgba(255, 255, 255, 0) 63%),
     linear-gradient(0deg, rgba(8, 12, 18, 0.12), rgba(8, 12, 18, 0.12)),
-    radial-gradient(circle at 74% 38%, rgba(245, 72, 159, 0.22), transparent 16%),
+    radial-gradient(circle at 78% 40%, rgba(245, 72, 159, 0.16), transparent 14%),
     linear-gradient(135deg, rgba(20, 28, 40, 0.98), rgba(12, 17, 25, 0.95));
 }
 
 .hero-copy::before {
   content: "";
   position: absolute;
-  inset: 24px 24px 24px auto;
-  width: 42%;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  inset: 28px 26px 28px auto;
+  width: 34%;
+  border: 1px solid rgba(255, 255, 255, 0.05);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent),
-    radial-gradient(circle at 58% 28%, rgba(255, 77, 112, 0.55), transparent 14%);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent),
+    radial-gradient(circle at 60% 34%, rgba(255, 77, 112, 0.26), transparent 16%);
   border-radius: 0 0 var(--radius-lg) 0;
-  opacity: 0.95;
+  opacity: 0.7;
 }
 
 .hero-copy::after {
   content: "";
   position: absolute;
-  left: 58%;
-  top: 108px;
-  width: 160px;
-  height: 56px;
-  background: rgba(11, 16, 24, 0.9);
-  border: 1px solid var(--line-soft);
-  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.22);
+  display: none;
 }
 
 .hero-actions,
@@ -354,16 +370,17 @@ h1 {
 }
 
 .hero-actions {
-  margin-top: 28px;
+  margin-top: 20px;
 }
 
 .hero-points {
-  margin: 28px 0 0;
+  margin: 18px 0 0;
   padding-left: 18px;
   color: rgba(238, 243, 247, 0.76);
-  line-height: 1.8;
+  line-height: 1.65;
   position: relative;
   z-index: 1;
+  font-size: 0.96rem;
 }
 
 .hero-stat-card,
@@ -384,13 +401,13 @@ h1 {
 .feature-card,
 .reservation-card,
 .result-card {
-  padding: 22px;
+  padding: 18px;
 }
 
 .hero-stat-card strong {
   display: block;
   margin-top: 6px;
-  font-size: 2rem;
+  font-size: 1.6rem;
 }
 
 .hero-stat-card.accent {
@@ -406,7 +423,7 @@ h1 {
 
 .hero-map-card.metro {
   position: relative;
-  min-height: 230px;
+  min-height: 180px;
   overflow: hidden;
   background:
     linear-gradient(180deg, rgba(17, 24, 35, 0.98), rgba(14, 20, 30, 0.98)),
@@ -425,7 +442,7 @@ h1 {
 
 .mini-point {
   position: absolute;
-  padding: 8px 12px;
+  padding: 6px 10px;
   border-radius: 999px;
   background: rgba(17, 23, 34, 0.96);
   border: 1px solid rgba(182, 242, 21, 0.18);
@@ -439,18 +456,19 @@ h1 {
 .point-e { right: 10%; top: 10%; }
 
 .section-heading {
-  margin-bottom: 22px;
+  margin-bottom: 16px;
 }
 
 .section-heading h2 {
   margin: 6px 0 0;
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(1.6rem, 3vw, 2.35rem);
+  line-height: 1.15;
 }
 
 .map-layout {
   display: grid;
   grid-template-columns: 320px minmax(0, 1fr) 320px;
-  gap: 22px;
+  gap: 16px;
   align-items: start;
 }
 
@@ -515,7 +533,7 @@ select {
 
 .prishtina-map {
   position: relative;
-  min-height: 620px;
+  min-height: 520px;
   overflow: hidden;
   border-radius: 28px;
   background:
@@ -532,7 +550,7 @@ select {
   bottom: 16px;
   color: rgba(182, 242, 21, 0.08);
   font-family: "Fraunces", serif;
-  font-size: 3.2rem;
+  font-size: 2.4rem;
   letter-spacing: 0.08em;
 }
 
@@ -673,9 +691,9 @@ select {
 }
 
 .selected-price {
-  margin: 18px 0 12px;
+  margin: 14px 0 10px;
   font-family: "Fraunces", serif;
-  font-size: 2rem;
+  font-size: 1.55rem;
 }
 
 .results-grid,
@@ -710,7 +728,7 @@ select {
 .selected-card h3,
 .map-topbar h3 {
   margin: 4px 0 8px;
-  font-size: 1.45rem;
+  font-size: 1.2rem;
 }
 
 .price-block {
@@ -745,10 +763,6 @@ select {
   color: #ff85c5;
 }
 
-.feature-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
 .summary-card,
 .roadmap-card,
 .recommendation-card,
@@ -768,7 +782,7 @@ select {
 .roadmap-card h3,
 .recommendation-card h3 {
   margin: 8px 0 10px;
-  font-size: 1.7rem;
+  font-size: 1.35rem;
 }
 
 .value-grid {
@@ -795,7 +809,7 @@ select {
 
 .pricing-table th,
 .pricing-table td {
-  padding: 18px 16px;
+  padding: 14px 14px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   text-align: left;
 }
@@ -855,7 +869,7 @@ select {
 .modal-card {
   background: var(--surface-solid);
   border-radius: 28px;
-  padding: 24px;
+  padding: 20px;
   border: 1px solid var(--line-soft);
   box-shadow: 0 30px 100px rgba(0, 0, 0, 0.4);
 }
@@ -915,7 +929,6 @@ select {
   .map-layout,
   .hero-grid,
   .reservation-layout,
-  .feature-grid,
   .pricing-layout,
   .value-grid,
   .roadmap-grid,
@@ -923,8 +936,8 @@ select {
     grid-template-columns: 1fr;
   }
 
-  .feature-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .hero-copy {
+    min-height: 360px;
   }
 }
 
@@ -942,19 +955,33 @@ select {
     align-items: stretch;
   }
 
-  .feature-grid {
-    grid-template-columns: 1fr;
-  }
-
   .prishtina-map {
-    min-height: 480px;
-  }
-
-  .hero-panel {
-    transform: none;
+    min-height: 400px;
   }
 
   .map-watermark {
-    font-size: 2.2rem;
+    font-size: 1.7rem;
+  }
+
+  h1 {
+    font-size: clamp(2.1rem, 10vw, 3rem);
+    max-width: 100%;
+  }
+
+  .hero-copy {
+    min-height: 320px;
+    background:
+      linear-gradient(180deg, rgba(23, 31, 45, 0.96), rgba(12, 17, 25, 0.96)),
+      radial-gradient(circle at 70% 28%, rgba(245, 72, 159, 0.15), transparent 16%);
+  }
+
+  .hero-copy::before {
+    width: 28%;
+    opacity: 0.42;
+  }
+
+  .page-shell::before,
+  .page-shell::after {
+    display: none;
   }
 }
