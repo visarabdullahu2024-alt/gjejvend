@@ -231,7 +231,7 @@ const translations = {
   en: {
     brand_subtitle: "Prishtina live parking simulator",
     nav_map: "Live Map",
-    nav_features: "Features",
+    nav_pricing: "Pricing",
     nav_reservations: "Reservations",
     open_map: "Open map",
     hero_eyebrow: "Ride-hailing style experience for your university project",
@@ -239,7 +239,7 @@ const translations = {
     hero_text:
       "This version turns Gjejvend into a live city simulator for Prishtina. Drivers can watch parking availability change in real time, tap map pins, compare prices, and reserve a spot before arriving.",
     hero_cta_primary: "Try live map",
-    hero_cta_secondary: "See simulator features",
+    hero_cta_secondary: "See pricing and policies",
     hero_point_1: "Live map pins that update every few seconds",
     hero_point_2: "Direct reservation from map or side panel",
     hero_point_3: "Prishtina hotspots: center, stadium, bus station, Ulpiana, and Sunny Hill zones",
@@ -439,7 +439,7 @@ const translations = {
   sq: {
     brand_subtitle: "simulatori i parkimit live në Prishtinë",
     nav_map: "Harta Live",
-    nav_features: "Veçoritë",
+    nav_pricing: "Çmimet",
     nav_reservations: "Rezervimet",
     open_map: "Hape hartën",
     hero_eyebrow: "Përvojë në stil ride-hailing për projektin tënd universitar",
@@ -447,7 +447,7 @@ const translations = {
     hero_text:
       "Ky version e kthen Gjejvend në një simulator live të qytetit për Prishtinën. Shoferët mund të shohin ndryshimin e parkimit në kohë reale, të prekin pinat në hartë, të krahasojnë çmimet dhe të rezervojnë një vend para se të arrijnë.",
     hero_cta_primary: "Provo hartën live",
-    hero_cta_secondary: "Shih veçoritë",
+    hero_cta_secondary: "Shih çmimet dhe politikat",
     hero_point_1: "Pina live në hartë që përditësohen çdo disa sekonda",
     hero_point_2: "Rezervim direkt nga harta ose paneli anësor",
     hero_point_3: "Pikat kryesore të Prishtinës: qendra, stadiumi, stacioni i autobusëve, Ulpiana dhe zona Sunny Hill",
@@ -1127,6 +1127,15 @@ function tickLiveAvailability() {
 function attachEvents() {
   elements.searchForm.addEventListener("submit", handleSearch);
   elements.sortSelect.addEventListener("change", renderAll);
+  document.querySelectorAll(".map-zone-button").forEach((button) => {
+    button.addEventListener("click", () => {
+      document.querySelector("#destination").value = button.dataset.destination;
+      state.search = currentSearchFormValues();
+      state.selectedSpot = null;
+      renderAll();
+      document.querySelector("#map").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
   elements.languageButtons.forEach((button) => {
     button.addEventListener("click", () => {
       state.language = button.dataset.lang;

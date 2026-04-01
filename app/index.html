@@ -30,7 +30,7 @@
 
           <nav class="nav-links">
             <a href="#map" data-i18n="nav_map">Live Map</a>
-            <a href="#features" data-i18n="nav_features">Features</a>
+            <a href="#pricing" data-i18n="nav_pricing">Pricing</a>
             <a href="#reservations" data-i18n="nav_reservations">Reservations</a>
           </nav>
 
@@ -57,7 +57,7 @@
 
               <div class="hero-actions">
                 <a class="button button-primary" href="#map" data-i18n="hero_cta_primary">Try live map</a>
-                <a class="button button-secondary" href="#features" data-i18n="hero_cta_secondary">See simulator features</a>
+                <a class="button button-secondary" href="#pricing" data-i18n="hero_cta_secondary">See pricing and policies</a>
               </div>
 
               <ul class="hero-points">
@@ -201,35 +201,36 @@
                   <div class="map-road north-south"></div>
                   <div class="map-road east-west"></div>
                   <div class="map-road diagonal"></div>
-                  <div class="map-zone zone-center" data-i18n="zone_qendra">Qendra</div>
-                  <div class="map-zone zone-stadium" data-i18n="zone_stadium">Stadium</div>
-                  <div class="map-zone zone-ulpiana">Ulpiana</div>
-                  <div class="map-zone zone-bus" data-i18n="zone_bus_station">Bus Station</div>
-                  <div class="map-zone zone-sunny">Sunny Hill</div>
+                  <button class="map-zone map-zone-button zone-center" type="button" data-destination="Prishtine Center" data-i18n="zone_qendra">Qendra</button>
+                  <button class="map-zone map-zone-button zone-stadium" type="button" data-destination="Fadil Vokrri Stadium" data-i18n="zone_stadium">Stadium</button>
+                  <button class="map-zone map-zone-button zone-ulpiana" type="button" data-destination="Ulpiana District">Ulpiana</button>
+                  <button class="map-zone map-zone-button zone-bus" type="button" data-destination="Bus Station" data-i18n="zone_bus_station">Bus Station</button>
+                  <button class="map-zone map-zone-button zone-sunny" type="button" data-destination="Sunny Hill Event Zone">Sunny Hill</button>
                   <div id="mapPins"></div>
-                  <div class="map-dock">
-                    <article class="map-dock-card">
-                      <p class="mini-label" data-i18n="dock_live_title">Live city pulse</p>
-                      <strong id="dockLiveCount">0</strong>
-                      <span data-i18n="dock_live_text">spots updating now</span>
-                    </article>
-                    <article class="map-dock-card">
-                      <p class="mini-label" data-i18n="dock_zone_title">Premium zone</p>
-                      <strong data-i18n="dock_zone_value">1.5x</strong>
-                      <span data-i18n="dock_zone_text">center demand multiplier</span>
-                    </article>
-                    <article class="map-dock-card wide">
-                      <p class="mini-label" data-i18n="dock_policy_title">Quick policy</p>
-                      <strong data-i18n="dock_policy_value">10 min grace + $0.05 app fee</strong>
-                      <span data-i18n="dock_policy_text">15-minute save-spot option and $2 no-show fee included in simulator rules</span>
-                    </article>
-                  </div>
                 </div>
 
                 <div class="legend-row">
                   <span class="legend-item"><i class="legend-dot green"></i><span data-i18n="legend_many">Many free spots</span></span>
                   <span class="legend-item"><i class="legend-dot amber"></i><span data-i18n="legend_limited">Limited spots</span></span>
                   <span class="legend-item"><i class="legend-dot red"></i><span data-i18n="legend_full">Almost full</span></span>
+                </div>
+
+                <div class="map-dock">
+                  <article class="map-dock-card">
+                    <p class="mini-label" data-i18n="dock_live_title">Live city pulse</p>
+                    <strong id="dockLiveCount">0</strong>
+                    <span data-i18n="dock_live_text">spots updating now</span>
+                  </article>
+                  <article class="map-dock-card">
+                    <p class="mini-label" data-i18n="dock_zone_title">Premium zone</p>
+                    <strong data-i18n="dock_zone_value">1.5x</strong>
+                    <span data-i18n="dock_zone_text">center demand multiplier</span>
+                  </article>
+                  <article class="map-dock-card wide">
+                    <p class="mini-label" data-i18n="dock_policy_title">Quick policy</p>
+                    <strong data-i18n="dock_policy_value">10 min grace + $0.05 app fee</strong>
+                    <span data-i18n="dock_policy_text">15-minute save-spot option and $2 no-show fee included in simulator rules</span>
+                  </article>
                 </div>
               </section>
 

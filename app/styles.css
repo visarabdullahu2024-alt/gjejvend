@@ -214,6 +214,12 @@ h4 {
   border: 1px solid var(--line-soft);
 }
 
+.button:active,
+.nav-cta:active,
+.map-zone-button:active {
+  transform: translateY(1px) scale(0.99);
+}
+
 .button:hover,
 .nav-cta:hover,
 .map-pin:hover {
@@ -648,6 +654,17 @@ select {
   color: rgba(238, 243, 247, 0.86);
 }
 
+.map-zone-button {
+  cursor: pointer;
+  font: inherit;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.map-zone-button:hover {
+  border-color: rgba(182, 242, 21, 0.4);
+  background: rgba(18, 25, 36, 0.96);
+}
+
 .zone-center { left: 44%; top: 45%; }
 .zone-stadium { left: 58%; top: 24%; }
 .zone-ulpiana { left: 64%; top: 62%; }
@@ -660,14 +677,10 @@ select {
 }
 
 .map-dock {
-  position: absolute;
-  left: 18px;
-  right: 18px;
-  bottom: 18px;
   display: grid;
   grid-template-columns: 160px 160px minmax(0, 1fr);
   gap: 10px;
-  z-index: 4;
+  margin-top: 12px;
 }
 
 .map-dock-card {
